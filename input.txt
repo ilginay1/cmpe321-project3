@@ -1,0 +1,9 @@
+create type Person 3 1 id int name str age int
+create record Person 1 Alice 30
+create record Person 2 Bob 25
+create record Person 3 Clara 35
+create record Person 4 Deniz 40
+search record Person 2
+range_search Person id 2 4
+range_search Person age 20 30
+stats

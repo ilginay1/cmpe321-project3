@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+*.bin
+output.txt
+stats_output.txt
+log.csv
+*.bin
+output.txt
+stats_output.txt
+log.csv
+catalog.json
+input_search_only.txt
+catalog.json
+input_search_only.txt
+workload*.txt

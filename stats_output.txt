@@ -1,0 +1,6 @@
+=== STATISTICS ===
+Disk I/O: 1 reads, 0 writes
+Buffer Pool: 3 requests, 2 hits, 1 misses (66.67% hit rate)
+Evictions: 0 (0 dirty writebacks)
+Index: bplus_tree, 1 nodes visited
+Records: 5 scanned, 3 returned

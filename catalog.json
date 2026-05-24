@@ -1,0 +1,21 @@
+{
+  "types": {
+    "Person": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "age",
+          "type": "int"
+        }
+      ],
+      "primary_key_order": 1
+    }
+  }
+}
