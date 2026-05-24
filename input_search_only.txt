@@ -1,3 +1,0 @@
-search record Person 2
-range_search Person age 20 30
-stats

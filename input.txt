@@ -1,9 +1,13 @@
-create type Person 3 1 id int name str age int
-create record Person 1 Alice 30
-create record Person 2 Bob 25
-create record Person 3 Clara 35
-create record Person 4 Deniz 40
-search record Person 2
-range_search Person id 2 4
-range_search Person age 20 30
+create type house 6 1 name str origin str leader str military_strength int wealth int spice_production int
+create record house Atreides Caladan Duke 8000 5000 150
+create record house Harkonnen GiediPrime Baron 12000 3000 200
+create record house Corrino Kaitain Emperor 15000 10000 50
+create record house Fremen Arrakis Stilgar 7000 2000 500
+search record house Atreides
+search record house Unknown
+range_search house name Atreides Harkonnen
+range_search house wealth 3000 9000
+range_search house military_strength 7000 13000
+delete record house Corrino
+search record house Corrino
 stats

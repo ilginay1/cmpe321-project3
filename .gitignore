@@ -1,17 +1,20 @@
+# macOS
 .DS_Store
+
+# Python cache
 __pycache__/
 *.py[cod]
+
+# Virtual environment
 .venv/
+
+# Generated DBMS runtime files
 *.bin
+catalog.json
 output.txt
 stats_output.txt
 log.csv
-*.bin
-output.txt
-stats_output.txt
-log.csv
-catalog.json
-input_search_only.txt
-catalog.json
-input_search_only.txt
+
+# Temporary/generated workload files
 workload*.txt
+input_search_only.txt
