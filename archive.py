@@ -27,7 +27,6 @@ def main(argv: list[str]) -> int:
 		print("Usage: python archive.py <config.json> <input.txt>", file=sys.stderr)
 		return 2
 
-	# Robust: relative Argumente relativ zur Script-Location auflösen.
 	base_dir = Path(__file__).resolve().parent
 	config_path = Path(argv[1])
 	input_path = Path(argv[2])
@@ -48,10 +47,8 @@ def main(argv: list[str]) -> int:
 			line = raw_line.strip()
 			if not line:
 				continue
-			# Requirement: jede nicht-leere Eingabezeile verarbeiten.
 			qp.process(line)
 
-	# Requirement: am Ende flush() aufrufen.
 	buffer.flush()
 	return 0
 
