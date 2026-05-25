@@ -1,0 +1,115 @@
+CMPE 321 Project 3 — Experiment Reproduction Record
+====================================================
+
+This file lists exact commands and configurations used for the three analysis
+experiments. All paths are relative to the project root (folder containing
+archive.py).
+
+Prerequisites
+-------------
+- Python 3.10+ (stdlib only; no pip packages required for the DBMS)
+- From project root:
+
+  cd cmpe321-project3
+
+Shared workload parameters (used for all experiments below)
+------------------------------------------------------------
+  RECORDS=200
+  QUERIES=100
+  SEED=42
+
+Generate workloads manually (optional; run_experiments.py does this internally):
+
+  python workload_generator.py --mode sequential --records 200 --queries 100 --seed 42 > workloads/sequential.txt
+  python workload_generator.py --mode random     --records 200 --queries 100 --seed 42 > workloads/random.txt
+  python workload_generator.py --mode range     --records 200 --queries 100 --seed 42 > workloads/range.txt
+  python workload_generator.py --mode mixed      --records 200 --queries 100 --seed 42 > workloads/mixed.txt
+
+Append "stats" as the last line of each workload file before running archive.py,
+or use run_experiments.py which appends stats automatically.
+
+Automated reproduction (recommended)
+------------------------------------
+Runs all three experiments, writes experiments/results.json and experiments/RESULTS.md:
+
+  python run_experiments.py --records 200 --queries 100 --seed 42
+
+Experiment 1 — LRU vs MRU
+-------------------------
+Goal: Compare replacement policies on sequential and random workloads.
+Fixed: buffer_pool_size=16, index_strategy=bplus_tree, page_size=4096
+
+Manual runs (example for sequential + LRU):
+
+  1. Remove old state: delete catalog.json, *.bin, output.txt, stats_output.txt
+  2. Set config.json:
+     {
+       "page_size": 4096,
+       "max_records_per_page": 10,
+       "buffer_pool_size": 16,
+       "replacement_policy": "LRU",
+       "index_strategy": "bplus_tree"
+     }
+  3. python workload_generator.py --mode sequential --records 200 --queries 100 --seed 42 > input_exp1.txt
+  4. echo stats >> input_exp1.txt   (Windows: add "stats" as last line in editor)
+  5. python archive.py config.json input_exp1.txt
+  6. Read stats_output.txt for Disk I/O and hit rate
+
+Repeat with replacement_policy "MRU" and modes sequential / random (4 combinations total).
+
+Experiment 2 — Index strategy comparison
+----------------------------------------
+Goal: Compare heap_scan, hash_index, bplus_tree on equality vs range queries.
+Fixed: buffer_pool_size=16, replacement_policy=LRU
+
+Equality workload (random searches):
+  python workload_generator.py --mode random --records 200 --queries 100 --seed 42 > input_eq.txt
+  (add "stats" as last line)
+  For each index_strategy in heap_scan, hash_index, bplus_tree:
+    - update config.json index_strategy
+    - clean catalog.json and *.bin
+    - python archive.py config.json input_eq.txt
+
+Range workload:
+  python workload_generator.py --mode range --records 200 --queries 100 --seed 42 > input_range.txt
+  (add "stats" as last line)
+  Same loop over index strategies.
+
+Experiment 3 — Buffer pool size sensitivity
+-------------------------------------------
+Goal: Vary buffer_pool_size with fixed mixed workload and bplus_tree + LRU.
+Fixed: index_strategy=bplus_tree, replacement_policy=LRU
+
+  python workload_generator.py --mode mixed --records 200 --queries 100 --seed 42 > input_exp3.txt
+  (add "stats" as last line)
+
+  For buffer_pool_size in 4, 8, 16, 32, 64:
+    - update config.json buffer_pool_size
+    - clean catalog.json and *.bin
+    - python archive.py config.json input_exp3.txt
+    - record total I/O (reads+writes) and hit rate from stats_output.txt
+
+Other verification commands
+---------------------------
+  python test_part_a_storage_buffer.py
+  python run_strategy_tests.py
+  python archive.py config.json input.txt
+
+Result tables (from run_experiments.py on this machine)
+-------------------------------------------------------
+See experiments/RESULTS.md for full tables. Summary:
+
+Experiment 1 (Total I/O / Hit rate):
+  Sequential: LRU 2796 / 33.3%  |  MRU 564 / 87.2%
+  Random:     LRU 812 / 66.2%   |  MRU 167 / 94.3%
+
+Experiment 2 (Total I/O):
+  Equality: heap_scan 1943 | hash_index 812 | bplus_tree 812
+  Range:    heap_scan 3516 | hash_index 2796 (fallback) | bplus_tree 2231
+
+Experiment 3 (mixed workload, bplus_tree, LRU):
+  pool 4: 3074 I/O, 4.0% hit
+  pool 8: 2756 I/O, 13.5% hit
+  pool 16: 1564 I/O, 51.1% hit
+  pool 32: 22 I/O, 100% hit
+  pool 64: 22 I/O, 100% hit
