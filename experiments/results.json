@@ -1,0 +1,208 @@
+{
+  "parameters": {
+    "records": 200,
+    "queries": 100,
+    "seed": 42
+  },
+  "experiment1": [
+    {
+      "label": "exp1_sequential_LRU",
+      "disk_reads": 2720,
+      "disk_writes": 76,
+      "total_io": 2796,
+      "buffer_requests": 4080,
+      "buffer_hits": 1360,
+      "buffer_misses": 2720,
+      "hit_rate_pct": 33.33,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 300,
+      "records_returned": 20000
+    },
+    {
+      "label": "exp1_sequential_MRU",
+      "disk_reads": 520,
+      "disk_writes": 44,
+      "total_io": 564,
+      "buffer_requests": 4080,
+      "buffer_hits": 3560,
+      "buffer_misses": 520,
+      "hit_rate_pct": 87.25,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 300,
+      "records_returned": 20000
+    },
+    {
+      "label": "exp1_random_LRU",
+      "disk_reads": 737,
+      "disk_writes": 75,
+      "total_io": 812,
+      "buffer_requests": 2180,
+      "buffer_hits": 1443,
+      "buffer_misses": 737,
+      "hit_rate_pct": 66.19,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 300,
+      "records_returned": 100
+    },
+    {
+      "label": "exp1_random_MRU",
+      "disk_reads": 124,
+      "disk_writes": 43,
+      "total_io": 167,
+      "buffer_requests": 2180,
+      "buffer_hits": 2056,
+      "buffer_misses": 124,
+      "hit_rate_pct": 94.31,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 300,
+      "records_returned": 100
+    }
+  ],
+  "experiment2": [
+    {
+      "label": "exp2_equality_heap_scan",
+      "disk_reads": 1867,
+      "disk_writes": 76,
+      "total_io": 1943,
+      "buffer_requests": 5176,
+      "buffer_hits": 3309,
+      "buffer_misses": 1867,
+      "hit_rate_pct": 63.93,
+      "index_strategy": "heap_scan",
+      "records_scanned": 29636,
+      "records_returned": 100
+    },
+    {
+      "label": "exp2_equality_hash_index",
+      "disk_reads": 737,
+      "disk_writes": 75,
+      "total_io": 812,
+      "buffer_requests": 2180,
+      "buffer_hits": 1443,
+      "buffer_misses": 737,
+      "hit_rate_pct": 66.19,
+      "index_strategy": "hash_index",
+      "records_scanned": 300,
+      "records_returned": 100
+    },
+    {
+      "label": "exp2_equality_bplus_tree",
+      "disk_reads": 737,
+      "disk_writes": 75,
+      "total_io": 812,
+      "buffer_requests": 2180,
+      "buffer_hits": 1443,
+      "buffer_misses": 737,
+      "hit_rate_pct": 66.19,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 300,
+      "records_returned": 100
+    },
+    {
+      "label": "exp2_range_heap_scan",
+      "disk_reads": 3440,
+      "disk_writes": 76,
+      "total_io": 3516,
+      "buffer_requests": 6160,
+      "buffer_hits": 2720,
+      "buffer_misses": 3440,
+      "hit_rate_pct": 44.16,
+      "index_strategy": "heap_scan",
+      "records_scanned": 39900,
+      "records_returned": 6116
+    },
+    {
+      "label": "exp2_range_hash_index",
+      "disk_reads": 2720,
+      "disk_writes": 76,
+      "total_io": 2796,
+      "buffer_requests": 4080,
+      "buffer_hits": 1360,
+      "buffer_misses": 2720,
+      "hit_rate_pct": 33.33,
+      "index_strategy": "hash_index",
+      "records_scanned": 20200,
+      "records_returned": 6116
+    },
+    {
+      "label": "exp2_range_bplus_tree",
+      "disk_reads": 2155,
+      "disk_writes": 76,
+      "total_io": 2231,
+      "buffer_requests": 3683,
+      "buffer_hits": 1528,
+      "buffer_misses": 2155,
+      "hit_rate_pct": 41.49,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 14230,
+      "records_returned": 6116
+    }
+  ],
+  "experiment3": [
+    {
+      "label": "exp3_pool_4",
+      "disk_reads": 2854,
+      "disk_writes": 220,
+      "total_io": 3074,
+      "buffer_requests": 2972,
+      "buffer_hits": 118,
+      "buffer_misses": 2854,
+      "hit_rate_pct": 3.97,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 2791,
+      "records_returned": 1477
+    },
+    {
+      "label": "exp3_pool_8",
+      "disk_reads": 2572,
+      "disk_writes": 184,
+      "total_io": 2756,
+      "buffer_requests": 2972,
+      "buffer_hits": 400,
+      "buffer_misses": 2572,
+      "hit_rate_pct": 13.46,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 2791,
+      "records_returned": 1477
+    },
+    {
+      "label": "exp3_pool_16",
+      "disk_reads": 1454,
+      "disk_writes": 110,
+      "total_io": 1564,
+      "buffer_requests": 2972,
+      "buffer_hits": 1518,
+      "buffer_misses": 1454,
+      "hit_rate_pct": 51.08,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 2791,
+      "records_returned": 1477
+    },
+    {
+      "label": "exp3_pool_32",
+      "disk_reads": 0,
+      "disk_writes": 22,
+      "total_io": 22,
+      "buffer_requests": 2972,
+      "buffer_hits": 2972,
+      "buffer_misses": 0,
+      "hit_rate_pct": 100.0,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 2791,
+      "records_returned": 1477
+    },
+    {
+      "label": "exp3_pool_64",
+      "disk_reads": 0,
+      "disk_writes": 22,
+      "total_io": 22,
+      "buffer_requests": 2972,
+      "buffer_hits": 2972,
+      "buffer_misses": 0,
+      "hit_rate_pct": 100.0,
+      "index_strategy": "bplus_tree",
+      "records_scanned": 2791,
+      "records_returned": 1477
+    }
+  ]
+}

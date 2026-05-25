@@ -18,3 +18,5 @@ log.csv
 # Temporary/generated workload files
 workload*.txt
 input_search_only.txt
+experiments/_tmp_input.txt
+_pdf_extract.txt
